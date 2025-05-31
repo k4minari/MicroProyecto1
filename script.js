@@ -74,13 +74,13 @@ class Pregunta {
       this.preguntasPartida = this.seleccionarPreguntas();
       this.partida = new Partida(nombre, this.preguntasPartida);
       this.ranking = new Ranking(topico);
-      this.tiempoRestante = 10; // 5 min
+      this.tiempoRestante = 300; // 5 min
       this.timerId = null;
     }
     seleccionarPreguntas() {
       return [...this.preguntasDisponibles]
         .sort(() => 0.5 - Math.random())
-        .slice(0, 10);
+        .slice(0, 300);
     }
     iniciarTemporizador() {
       actualizarTemporizadorUI(this.tiempoRestante);
