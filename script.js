@@ -80,7 +80,7 @@ class Pregunta {
     seleccionarPreguntas() {
       return [...this.preguntasDisponibles]
         .sort(() => 0.5 - Math.random())
-        .slice(0, 300);
+        .slice(0, 10);
     }
     iniciarTemporizador() {
       actualizarTemporizadorUI(this.tiempoRestante);
