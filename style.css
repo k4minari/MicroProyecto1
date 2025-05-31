@@ -1,0 +1,167 @@
+/* ================ FONDO GENERAL ================ */
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #b3ecff;           /* azul claro océano */
+    font-family: 'Segoe UI', sans-serif;
+    color: white;
+    font-weight: 600;
+    display: flex;
+    flex-direction: column;              /* apilamos todo verticalmente */
+    align-items: center;                 /* centramos horizontalmente */
+    justify-content: flex-start;         /* anclamos arriba */
+    min-height: 100vh;
+    padding-top: 5vh;
+  }
+  
+  /* ================ CABECERA PRINCIPAL ================ */
+  h1 {
+    color: #001f33;                      /* azul muy oscuro */
+    text-align: center;
+    font-weight: 700;
+    margin: 0 0 2vh 0;                   /* margen inferior para separar */
+  }
+  
+  /* ================ CONTENEDORES ================ */
+  #pantallaInicio,
+  #pantallaQuiz,
+  #pantallaResultados,
+  #pantallaRanking {
+    background-color: #00334d;           /* azul marino profundo */
+    padding: 5% 8%;
+    width: 90%;
+    max-width: 600px;
+    border-radius: 1em;
+    box-shadow: 0 0 10px rgb(0 0 0 / 0.3);
+    box-sizing: border-box;
+    margin-bottom: 5vh;
+  }
+  
+  /* --- pantalla de inicio SIEMPRE en columna --- */
+  #pantallaInicio {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 1em;
+  }
+  #pantallaInicio[style*="display: block"] {
+    display: flex !important;
+  }
+  
+  /* ================ TÍTULOS SECUNDARIOS ================ */
+  h2, h3 {
+    text-align: center;
+    color: #7ec8ff;                      /* azul pastel */
+    font-weight: 700;
+    margin-bottom: 1em;
+  }
+  
+  /* ================ FORMULARIO ================ */
+  label {
+    display: block;
+    margin-bottom: 0.5em;                /* espacio sobre el input */
+  }
+  
+  input[type="text"] {
+    width: 100%;
+    padding: 1em;
+    margin-bottom: 1em;
+    border: none;
+    border-radius: 0.5em;
+    font-size: 1rem;
+    box-sizing: border-box;
+  }
+  
+  /* ================ BOTONES ================ */
+  button {
+    width: 100%;
+    padding: 1em;
+    font-size: 1rem;
+    background-color: #00688B;
+    color: white;
+    border: none;
+    border-radius: 0.5em;
+    cursor: pointer;
+    margin-top: 1em;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  
+  button:hover {
+    background-color: #005070;
+  }
+  
+  /* ================ PREGUNTAS Y OPCIONES ================ */
+  .pregunta {
+    margin-bottom: 2em;
+  }
+  
+  .opcion {
+    display: block;
+    padding: 0.7em;
+    margin: 0.5em 0;
+    background-color: #004c70;
+    border-radius: 0.5em;
+    cursor: pointer;
+    font-weight: 600;
+    transition: background-color 0.3s;
+  }
+  
+  .opcion:hover {
+    background-color: #00688B;
+  }
+  
+  /* Retroalimentación pastel */
+  .opcion.correcta   { background-color: #7EDC92; color: black; }
+  .opcion.incorrecta { background-color: #F29C9C; color: black; }
+  
+  /* ================ RESULTADOS ================ */
+  #detalleResultados {
+    background: linear-gradient(to bottom, #00334d 0%, #004c70 100%);
+    border-radius: 1em;
+    padding: 2% 3%;
+  }
+  
+  /* ================ RANKING ================ */
+  #ranking {
+    list-style: none;
+    padding-left: 0;
+    counter-reset: pos;                  /* contador para numeración */
+  }
+  
+  #ranking li {
+    background-color: #004c70;
+    margin: 0.5em 0;
+    padding: 0.7em;
+    border-radius: 0.5em;
+    text-align: center;
+    font-weight: 600;
+  }
+  
+  /* numeración automática 1. 2. 3. 4. 5. */
+  #ranking li::before {
+    counter-increment: pos;
+    content: counter(pos) ". ";
+    font-weight: 700;
+    margin-right: 0.4em;
+  }
+  
+  /* ================ RESPONSIVE EXTRA PEQUEÑO ================ */
+  @media (max-width: 480px) {
+    body { padding-top: 2vh; }
+  
+    #pantallaInicio,
+    #pantallaQuiz,
+    #pantallaResultados,
+    #pantallaRanking {
+      padding: 8% 6%;
+    }
+  
+    h1 { font-size: 1.5rem; }
+  
+    button,
+    input[type="text"] {
+      font-size: 0.95rem;
+    }
+  }
+  
