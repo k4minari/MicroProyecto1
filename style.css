@@ -1,167 +1,232 @@
 /* ================ FONDO GENERAL ================ */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
 body {
-    margin: 0;
-    padding: 0;
-    background-color: #b3ecff;           /* azul claro océano */
-    font-family: 'Segoe UI', sans-serif;
-    color: white;
-    font-weight: 600;
-    display: flex;
-    flex-direction: column;              /* apilamos todo verticalmente */
-    align-items: center;                 /* centramos horizontalmente */
-    justify-content: flex-start;         /* anclamos arriba */
-    min-height: 100vh;
-    padding-top: 5vh;
+  /*
+    Fondo degradado radial que va de un color muy claro (casi blanco)
+    en el centro a un azul claro tipo océano en los bordes.
+  */
+  background: radial-gradient(ellipse at center, rgba(255,254,234,1) 0%, rgba(255,254,234,1) 35%, #B7E8EB 100%);
+  font-family: 'Segoe UI', sans-serif;
+  color: white;
+  font-weight: 600;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+  min-height: 100vh;
+  padding-top: 5vh;
+}
+
+.ocean {
+  height: 5%;
+  width: 100%;
+  position: fixed; /* Mantenemos el fondo fijo */
+  z-index: -1; /* Envía el elemento detrás de otros contenidos. */
+  bottom: 0;
+  left: 0;
+  background: #015871;
+}
+
+.wave {
+  background: url(https://s3-us-west-2.amazonaws.com/s.cdpn.io/85486/wave.svg) repeat-x; /* Imagen de la ola que se repite horizontalmente. */
+  position: absolute;
+  z-index: -1;
+  top: -198px;
+  width: 6400px;
+  height: 198px;
+  animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) infinite;
+  transform: translate3d(0, 0, 0);
+}
+
+.wave:nth-of-type(2) {
+  top: -175px;
+  animation: wave 7s cubic-bezier( 0.36, 0.45, 0.63, 0.53) -.125s infinite, swell 7s ease -1.25s infinite;
+  opacity: 1;
+}
+
+@keyframes wave {
+  0% {
+    margin-left: 0;
   }
-  
-  /* ================ CABECERA PRINCIPAL ================ */
-  h1 {
-    color: #001f33;                      /* azul muy oscuro */
-    text-align: center;
-    font-weight: 700;
-    margin: 0 0 2vh 0;                   /* margen inferior para separar */
+  100% {
+    margin-left: -1600px;
   }
-  
-  /* ================ CONTENEDORES ================ */
+}
+
+@keyframes swell {
+  0%, 100% {
+    transform: translate3d(0,-25px,0);
+  }
+  50% {
+    transform: translate3d(0,5px,0);
+  }
+}
+
+/* ================ CABECERA PRINCIPAL ================ */
+h1 {
+  color: #001f33;
+  text-align: center;
+  font-weight: 700;
+  margin: 0 0 2vh 0;
+}
+
+/* ================ CONTENEDORES ================ */
+
+main { /* Permite que el contenido del main sea scrollable si excede el tamaño */
+  overflow-y: auto; /* Permite el scroll vertical si el contenido es demasiado largo */
+  max-height: 100vh; /* Establece una altura máxima para que se active el scroll */
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  box-sizing: border-box; 
+  padding: 0 1em; 
+}
+
+#pantallaInicio,
+#pantallaQuiz,
+#pantallaResultados,
+#pantallaRanking {
+  background-color: #00334d;
+  padding: 5% 8%;
+  width: 90%;
+  max-width: 600px;
+  border-radius: 1em;
+  box-shadow: 0 0 10px rgb(0 0 0 / 0.3);
+  box-sizing: border-box;
+  margin-bottom: 5vh;
+  flex-shrink: 0; /* Evita que los elementos se encojan si hay poco espacio */
+}
+
+/* --- pantalla de inicio SIEMPRE en columna --- */
+#pantallaInicio {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 1em;
+}
+#pantallaInicio[style*="display: block"] {
+  display: flex !important;
+}
+
+/* ================ TÍTULOS SECUNDARIOS ================ */
+h2, h3 {
+  text-align: center;
+  color: #7ec8ff;
+  font-weight: 700;
+  margin-bottom: 1em;
+}
+
+/* ================ FORMULARIO ================ */
+label {
+  display: block;
+  margin-bottom: 0.5em;
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: 1em;
+  margin-bottom: 1em;
+  border: none;
+  border-radius: 0.5em;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+/* ================ BOTONES ================ */
+button {
+  width: 100%;
+  padding: 1em;
+  font-size: 1rem;
+  background-color: #00688B;
+  color: white;
+  border: none;
+  border-radius: 0.5em;
+  cursor: pointer;
+  margin-top: 1em;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #005070;
+}
+
+/* ================ PREGUNTAS Y OPCIONES ================ */
+.pregunta {
+  margin-bottom: 2em;
+}
+
+.opcion {
+  display: block;
+  padding: 0.7em;
+  margin: 0.5em 0;
+  background-color: #004c70;
+  border-radius: 0.5em;
+  cursor: pointer;
+  font-weight: 600;
+  transition: background-color 0.3s;
+}
+
+.opcion:hover {
+  background-color: #00688B;
+}
+
+/* Retroalimentación pastel */
+.opcion.correcta { background-color: #7EDC92; color: black; }
+.opcion.incorrecta { background-color: #F29C9C; color: black; }
+
+/* ================ RESULTADOS ================ */
+#detalleResultados {
+  background: linear-gradient(to bottom, #00334d 0%, #004c70 100%);
+  border-radius: 1em;
+  padding: 2% 3%;
+}
+
+/* ================ RANKING ================ */
+#ranking {
+  list-style: none;
+  padding-left: 0;
+  counter-reset: pos;
+}
+
+#ranking li {
+  background-color: #004c70;
+  margin: 0.5em 0;
+  padding: 0.7em;
+  border-radius: 0.5em;
+  text-align: center;
+  font-weight: 600;
+}
+
+/* numeración automática 1. 2. 3. 4. 5. */
+#ranking li::before {
+  counter-increment: pos;
+  content: counter(pos) ". ";
+  font-weight: 700;
+  margin-right: 0.4em;
+}
+
+/* ================ RESPONSIVE EXTRA PEQUEÑO ================ */
+@media (max-width: 480px) {
+  body { padding-top: 2vh; }
+
   #pantallaInicio,
   #pantallaQuiz,
   #pantallaResultados,
   #pantallaRanking {
-    background-color: #00334d;           /* azul marino profundo */
-    padding: 5% 8%;
-    width: 90%;
-    max-width: 600px;
-    border-radius: 1em;
-    box-shadow: 0 0 10px rgb(0 0 0 / 0.3);
-    box-sizing: border-box;
-    margin-bottom: 5vh;
+    padding: 8% 6%;
   }
-  
-  /* --- pantalla de inicio SIEMPRE en columna --- */
-  #pantallaInicio {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1em;
-  }
-  #pantallaInicio[style*="display: block"] {
-    display: flex !important;
-  }
-  
-  /* ================ TÍTULOS SECUNDARIOS ================ */
-  h2, h3 {
-    text-align: center;
-    color: #7ec8ff;                      /* azul pastel */
-    font-weight: 700;
-    margin-bottom: 1em;
-  }
-  
-  /* ================ FORMULARIO ================ */
-  label {
-    display: block;
-    margin-bottom: 0.5em;                /* espacio sobre el input */
-  }
-  
+
+  h1 { font-size: 1.5rem; }
+
+  button,
   input[type="text"] {
-    width: 100%;
-    padding: 1em;
-    margin-bottom: 1em;
-    border: none;
-    border-radius: 0.5em;
-    font-size: 1rem;
-    box-sizing: border-box;
+    font-size: 0.95rem;
   }
-  
-  /* ================ BOTONES ================ */
-  button {
-    width: 100%;
-    padding: 1em;
-    font-size: 1rem;
-    background-color: #00688B;
-    color: white;
-    border: none;
-    border-radius: 0.5em;
-    cursor: pointer;
-    margin-top: 1em;
-    font-weight: 600;
-    transition: background-color 0.3s;
-  }
-  
-  button:hover {
-    background-color: #005070;
-  }
-  
-  /* ================ PREGUNTAS Y OPCIONES ================ */
-  .pregunta {
-    margin-bottom: 2em;
-  }
-  
-  .opcion {
-    display: block;
-    padding: 0.7em;
-    margin: 0.5em 0;
-    background-color: #004c70;
-    border-radius: 0.5em;
-    cursor: pointer;
-    font-weight: 600;
-    transition: background-color 0.3s;
-  }
-  
-  .opcion:hover {
-    background-color: #00688B;
-  }
-  
-  /* Retroalimentación pastel */
-  .opcion.correcta   { background-color: #7EDC92; color: black; }
-  .opcion.incorrecta { background-color: #F29C9C; color: black; }
-  
-  /* ================ RESULTADOS ================ */
-  #detalleResultados {
-    background: linear-gradient(to bottom, #00334d 0%, #004c70 100%);
-    border-radius: 1em;
-    padding: 2% 3%;
-  }
-  
-  /* ================ RANKING ================ */
-  #ranking {
-    list-style: none;
-    padding-left: 0;
-    counter-reset: pos;                  /* contador para numeración */
-  }
-  
-  #ranking li {
-    background-color: #004c70;
-    margin: 0.5em 0;
-    padding: 0.7em;
-    border-radius: 0.5em;
-    text-align: center;
-    font-weight: 600;
-  }
-  
-  /* numeración automática 1. 2. 3. 4. 5. */
-  #ranking li::before {
-    counter-increment: pos;
-    content: counter(pos) ". ";
-    font-weight: 700;
-    margin-right: 0.4em;
-  }
-  
-  /* ================ RESPONSIVE EXTRA PEQUEÑO ================ */
-  @media (max-width: 480px) {
-    body { padding-top: 2vh; }
-  
-    #pantallaInicio,
-    #pantallaQuiz,
-    #pantallaResultados,
-    #pantallaRanking {
-      padding: 8% 6%;
-    }
-  
-    h1 { font-size: 1.5rem; }
-  
-    button,
-    input[type="text"] {
-      font-size: 0.95rem;
-    }
-  }
-  
+}
