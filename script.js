@@ -65,7 +65,7 @@ class Pregunta {
     }
   }
   
-  // ---------------- Clase Quiz con temporizador ----------------
+  // ---------------- Clase Quiz ----------------
   class Quiz {
     constructor(topico, nombre) {
       this.topico = topico;
@@ -113,7 +113,7 @@ class Pregunta {
     }
   }
   
-  // -------------- Banco de preguntas dummy --------------
+  // -------------- Banco de preguntas --------------
   Quiz.bancoPreguntas = {
     vidaMarina: [
       new Pregunta("¿Los corales son...?", ["Plantas", "Rocas", "Animales", "Hongos"], "Animales"),
@@ -125,12 +125,37 @@ class Pregunta {
       new Pregunta("¿Qué pez puede vivir tanto en agua dulce como salada?", ["Tiburón toro", "Pez payaso", "Pez globo", "Anguila eléctrica"], "Tiburón toro"),
       new Pregunta("¿Cuál de estos animales usa tinta como defensa?", ["Pulpo", "Medusa", "Estrella de mar", "Caballito de mar"], "Pulpo"),
       new Pregunta("¿Qué animal marino tiene el cerebro más grande en proporción a su cuerpo?", ["Delfín", "Ballena jorobada", "Tiburón martillo", "Raya"], "Delfín"),
-      new Pregunta("¿Cuál de estos animales puede regenerar partes de su cuerpo?", ["Medusa", "Ca", "Estrella de mar", "Pez león"], "Estrella de mar"),
+      new Pregunta("¿Cuál de estos animales puede regenerar partes de su cuerpo?", ["Medusa", "Camaron mantis", "Estrella de mar", "Pez león"], "Estrella de mar"),
       new Pregunta("¿Qué tipo de simetría tienen los equinodermos adultos?", ["Bilateral", "Radial", "Asimétrica", "Esférica"], "Radial"),
       new Pregunta("¿Cuál de los siguientes animales puede usar herramientas?", ["Tiburón blanco", "Delfín nariz de botella", "Raya", "Atún"], "Delfín nariz de botella"),
       new Pregunta("¿Cuál de estos animales es un crustáceo?", ["Cangrejo", "Estrella de mar", "Pulpo", "Coral"], "Cangrejo"),
       new Pregunta("¿Qué estructura usan los peces para detectar movimientos en el agua?", ["Escamas", "Línea lateral", "Aletas", "Branquias"], "Línea lateral"),
-      new Pregunta("¿Cuál de estos animales forma simbiosis con las anémonas?", ["Pez payaso", "Tiburón", "Raya", "Atún"], "Pez payaso")
+      new Pregunta("¿Cuál de estos animales forma simbiosis con las anémonas?", ["Pez payaso", "Tiburón", "Raya", "Atún"], "Pez payaso"),
+      new Pregunta(
+        "¿Qué molusco es famoso por producir perlas?",
+        ["Calamar", "Pulpo", "Ostra", "Mejillón"],
+        "Ostra"
+      ),
+      new Pregunta(
+        "¿Cuál de estos tiburones mantiene la sangre relativamente caliente (endotermia parcial)?",
+        ["Tiburón toro", "Tiburón tigre", "Tiburón martillo", "Tiburón blanco"],
+        "Tiburón blanco"
+      ),
+      new Pregunta(
+        "¿Qué pez usa un apéndice luminoso llamado «esca» como señuelo?",
+        ["Pez payaso", "Pez mariposa", "Pez rape abisal", "Pez loro"],
+        "Pez rape abisal"
+      ),
+      new Pregunta(
+        "¿Cuál es la principal fuente de alimento de las tortugas verdes adultas?",
+        ["Medusas", "Crustáceos", "Algas y pastos marinos", "Pequeños peces"],
+        "Algas y pastos marinos"
+      ),
+      new Pregunta(
+        "¿Qué invertebrado marino posee sangre azulada en un sistema circulatorio abierto?",
+        ["Estrella de mar", "Anémona", "Erizo de mar", "Cangrejo herradura"],
+        "Cangrejo herradura"
+      )
     ]
   };
   
@@ -172,7 +197,7 @@ class Pregunta {
   function iniciar() {
     const nombre = document.getElementById("nombre").value.trim();
     if (!nombre) {
-      alert("Ingresa un nombre válido");
+      
       return;
     }
     quiz = new Quiz("vidaMarina", nombre);
@@ -198,6 +223,14 @@ class Pregunta {
         </label>`;
     });
     contPregunta.innerHTML = html;
+    btnSiguiente.disabled = true;                       // 1) desactiva el botón
+  document
+    .querySelectorAll('input[name="respuesta"]')
+    .forEach(radio => {
+      radio.addEventListener("change", () => {
+        btnSiguiente.disabled = false;                // 2) lo activa al elegir
+      });
+    });
   }
   
   function siguiente() {
@@ -218,6 +251,15 @@ class Pregunta {
   function mostrarResultados() {
     pantallaQuiz.style.display = "none";
     pantallaResultados.style.display = "block";
+
+    const nombre = quiz.partida.nombre;           // Nombre del jugador
+    const puntaje = quiz.partida.puntaje;                // 0 – 10
+    document.getElementById("puntajeFinal").innerText =
+      `${nombre} obtuviste ${puntaje} de 10`;
+  
+    const porcentaje = ((puntaje / 10) * 100).toFixed(2);
+    document.getElementById("porcentajeAcierto").innerText =
+      `Porcentaje de acierto: ${porcentaje}%`;
   
     contResultados.innerHTML = "";
     quiz.partida.obtenerResultadosDetalle().forEach(r => {
@@ -246,13 +288,14 @@ class Pregunta {
       ulRanking.appendChild(li);
     });
   }
+  function ocultarPantallas() {
+    [pantallaResultados, pantallaRanking, pantallaQuiz].forEach(p => p.style.display = "none");
+    pantallaInicio.style.display = "flex";
+  }
   
   function volverAlMenu() {
     // reset de pantallas
-    pantallaResultados.style.display = "none";
-    pantallaRanking.style.display = "none";
-    pantallaQuiz.style.display = "none";
-    pantallaInicio.style.display = "flex";
+    ocultarPantallas();
   
     // reset de campos
     document.getElementById("nombre").value = "";
