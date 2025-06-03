@@ -165,17 +165,14 @@ class Pregunta {
   const pantallaInicio     = document.getElementById("pantallaInicio");
   const pantallaQuiz       = document.getElementById("pantallaQuiz");
   const pantallaResultados = document.getElementById("pantallaResultados");
-  const pantallaRanking    = document.getElementById("pantallaRanking");
+ 
   
   const btnIniciar       = document.getElementById("btnIniciar");
   const btnSiguiente     = document.getElementById("btnSiguiente");
-  const btnVerRanking    = document.getElementById("btnVerRanking");
+
   const btnVolverInicio1 = document.getElementById("btnVolverInicio");
-  const btnVolverInicio2 = document.getElementById("btnVolverInicioDesdeRanking");
-  
   const contPregunta = document.getElementById("preguntaActual");
   const contResultados = document.getElementById("detalleResultados");
-  const ulRanking  = document.getElementById("ranking");
   const temporizadorUI = document.getElementById("temporizador");
   
   let quiz = null;
@@ -183,9 +180,7 @@ class Pregunta {
   // -- Eventos --
   btnIniciar.addEventListener("click", iniciar);
   btnSiguiente.addEventListener("click", siguiente);
-  btnVerRanking.addEventListener("click", () => { mostrarRanking(); });
   btnVolverInicio1.addEventListener("click", volverAlMenu);
-  btnVolverInicio2.addEventListener("click", volverAlMenu);
   
   // -- Funciones UI básicas --
   function actualizarTemporizadorUI(seg) {
@@ -203,8 +198,7 @@ class Pregunta {
     quiz = new Quiz("vidaMarina", nombre);
     pantallaInicio.style.display = "none";
     pantallaResultados.style.display = "none";
-    pantallaRanking.style.display = "none";
-  
+    
     pantallaQuiz.style.display = "block";
     quiz.iniciarTemporizador();
     mostrarPregunta();
@@ -276,20 +270,26 @@ class Pregunta {
       contResultados.appendChild(div);
     });
   }
+  function renderRankingInicio() {
+    const lista = document.getElementById('listaRankingInicio');
+    lista.innerHTML = "";
   
-  function mostrarRanking() {
-    pantallaResultados.style.display = "none";
-    pantallaRanking.style.display = "block";
-  
-    ulRanking.innerHTML = "";
-    quiz.obtenerRanking().forEach(r => {
+    const ranking = new Ranking("vidaMarina");
+    ranking.obtenerTop().forEach((r, index) => {
       const li = document.createElement("li");
-      li.textContent = `${r.nombre} - ${r.puntaje} pts - ${r.fecha}`;
-      ulRanking.appendChild(li);
+      li.textContent = ` ${r.nombre} - ${r.puntaje}/10 pts - ${r.fecha}`;
+      lista.appendChild(li);
     });
   }
+  
+  
+  document.addEventListener('DOMContentLoaded', () => {
+    renderRankingInicio(); 
+  });
+  
+
   function ocultarPantallas() {
-    [pantallaResultados, pantallaRanking, pantallaQuiz].forEach(p => p.style.display = "none");
+    [pantallaResultados, pantallaQuiz].forEach(p => p.style.display = "none");
     pantallaInicio.style.display = "flex";
   }
   
@@ -302,5 +302,6 @@ class Pregunta {
     contPregunta.innerHTML = "";
     contResultados.innerHTML = "";
     temporizadorUI.textContent = "5:00";
+    renderRankingInicio()
   }
   

@@ -24,6 +24,10 @@
       <label for="nombre">Ingresa tu nombre:</label>
       <input type="text" id="nombre" placeholder="Tu nombre">
       <button id="btnIniciar">INICIAR</button>
+      <h2 class="heading-ranking">Top 5</h2>
+      <div id="rankingInicio" class="ranking-inicio">
+        <ul id="listaRankingInicio"></ul>
+      </div>
     </section>
 
     <!-- Pantalla del quiz -->
@@ -40,17 +44,12 @@
         <p id="porcentajeAcierto"></p> 
       <div id="detalleResultados"></div>
       <div class="acciones">
-        <button id="btnVerRanking">RANKING</button>
+        
         <button id="btnVolverInicio">MENU</button>
       </div>
     </section>
 
-    <!-- Pantalla del ranking -->
-    <section id="pantallaRanking" style="display: none;">
-      <h2>Top 5</h2>
-      <ul id="ranking"></ul>
-      <button id="btnVolverInicioDesdeRanking">MENU</button>
-    </section>
+    
   </main>
 
 </body>

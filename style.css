@@ -90,8 +90,7 @@ main { /* Permite que el contenido del main sea scrollable si excede el tamaño 
 
 #pantallaInicio,
 #pantallaQuiz,
-#pantallaResultados,
-#pantallaRanking {
+#pantallaResultados {
   background-color: #00334d;
   padding: 5% 8%;
   width: 90%;
@@ -113,6 +112,13 @@ main { /* Permite que el contenido del main sea scrollable si excede el tamaño 
 #pantallaInicio[style*="display: block"] {
   display: flex !important;
 }
+#pantallaInicio label {
+    font-size: 1.1em;   /* ligeramente mayor que el texto normal */
+    font-weight: 600;   /* mismo peso que el resto de la interfaz */
+  }
+
+#pantallaInicio input[type="text"]  {
+     margin-bottom: 0.1em !important; }
 
 /* ================ TÍTULOS SECUNDARIOS ================ */
 h2, h3 {
@@ -192,29 +198,8 @@ button:disabled {
   padding: 2% 3%;
 }
 
-/* ================ RANKING ================ */
-#ranking {
-  list-style: none;
-  padding-left: 0;
-  counter-reset: pos;
-}
 
-#ranking li {
-  background-color: #004c70;
-  margin: 0.5em 0;
-  padding: 0.7em;
-  border-radius: 0.5em;
-  text-align: center;
-  font-weight: 600;
-}
 
-/* numeración automática 1. 2. 3. 4. 5. */
-#ranking li::before {
-  counter-increment: pos;
-  content: counter(pos) ". ";
-  font-weight: 700;
-  margin-right: 0.4em;
-}
 
 /* ================ RESPONSIVE EXTRA PEQUEÑO ================ */
 @media (max-width: 480px) {
@@ -234,3 +219,58 @@ button:disabled {
     font-size: 0.95rem;
   }
 }
+
+/* ========== RANKING EN MENÚ (versión final) ========== */
+.ranking-inicio {
+    margin-top: 5%;
+    padding: 3%;
+    background-color: #c9e9ff;   /* azul claro un poco más intenso */
+    border-radius: 12px;
+    color: black;
+    width: 80%;
+    max-width: 400px;
+    text-align: left;
+  }
+  
+  /* Encabezado “Top 5” */
+  .heading-ranking {
+    color: #c9e9ff;              /* mismo azul claro del fondo */
+    font-weight: 700;
+    margin: 1.8em 0 0.1em;
+    text-align: center;
+  }
+  
+  /* Lista y numeración automática */
+  .ranking-inicio ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    counter-reset: pos;
+  }
+  
+  .ranking-inicio li {
+    margin: 0.4em 0;
+    padding: 0.4em 0.6em;
+    border-radius: 0.4em;
+    background: none;
+    font-weight: 600;
+    color: black;
+  }
+  
+  .ranking-inicio li::before {
+    counter-increment: pos;
+    content: counter(pos) ". ";
+    margin-right: 0.4em;
+    font-weight: 700;
+    color: black; /* color por defecto del número */
+  }
+  
+  /* — Colores y tamaños especiales — */
+  .ranking-inicio li:nth-child(1) { font-size: 1.15em; }
+  .ranking-inicio li:nth-child(2) { font-size: 1.075em; }
+  .ranking-inicio li:nth-child(3) { font-size: 1.025em; }
+  
+  .ranking-inicio li:nth-child(1)::before { color: #d4af37; } /* oro   */
+  .ranking-inicio li:nth-child(2)::before { color: #C0C0C0; } /* plata */
+  .ranking-inicio li:nth-child(3)::before { color: #cd7f32; } /* bronce */
+  
